@@ -4,3 +4,4 @@ Contract successfully uses assert() - assert function = The assert function is u
 Contract successfully uses revert() statements = The revert function is similar to the require function in that it’s used to revert a transaction if a condition is not met.
 
 AUTHOR - shreyakandpal17@gmail.com
+ 
