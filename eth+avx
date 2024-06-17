@@ -1,36 +1,29 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-contract copcontract {
-    address public owner;
-    uint256 public value;
-    constructor() {
-        owner = msg.sender;
-    }
-    // Function to set the value
-    function setValue(uint256 _value) public onlyOwner {
-        // Using require to ensure the value is non-negative
-        require(_value >= 0, "Value must be non-negative");
-        value = _value;
-    }
-    // Function to double the value
-    function doubleValue() public onlyOwner {
-        // Using assert to check an invariant (value should not exceed half of uint256 max)
-        assert(value <= type(uint256).max / 2);
-        value *= 2;
-    }
-    // Function to reset the value
-    function resetValue() public onlyOwner {
-        // Using revert to handle a specific condition
-        if (value == 0) {
-            revert("Value is already zero");
-        }
+contract VogueModels {
+    mapping(address => uint) public age;
 
-        value = 0;
+   
+    mapping(address => bool) public haveEnterprise;
+
+    function setAge(uint _age) public {
+        require(_age > 0 && _age < 50, "Invalid age provided.");
+        age[msg.sender] = _age;
     }
-    // Modifier to restrict access to the owner
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Caller is not the owner");
-        _;
+    function setEnterprise(bool _haveEnterprise) public {
+        haveEnterprise[msg.sender] =_haveEnterprise;
+    }
+    function checkEligibility() public view returns (bool) {
+        uint userAge = age[msg.sender];
+        bool Enterprise = haveEnterprise[msg.sender];
+        require(userAge > 0, "Age is not set. Please set your age first.");
+        if (userAge < 15) {
+            
+            revert("You are should wait");
+        }
+        assert(Enterprise == true);
+        return true;
     }
 }
